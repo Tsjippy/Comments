@@ -2,7 +2,8 @@
 namespace SIM\COMMENTS;
 use SIM;
 
-add_action('sim_frontend_post_after_content', function($frontendcontend){
+add_action('sim_frontend_post_after_content', __NAMESPACE__.'\afterPostContent');
+function afterPostContent($frontendcontend){
     $allowedPostTypes     = SIM\getModuleOption(MODULE_SLUG, 'posttypes');
 
     if(in_array($frontendcontend->postType, $allowedPostTypes)){
@@ -26,11 +27,11 @@ add_action('sim_frontend_post_after_content', function($frontendcontend){
         </label>
     </div>
     <?php
-});
-
+}
 
 // Allow comments
-add_action('sim_after_post_save', function($post, $frontEndPost){
+add_action('sim_after_post_save', __NAMESPACE__.'\afterPostSave', 999, 2);
+function afterPostSave($post, $frontEndPost){
     if(isset($_POST['comments']) && $_POST['comments'] == 'allow'){
         wp_update_post(
             array(
@@ -50,4 +51,4 @@ add_action('sim_after_post_save', function($post, $frontEndPost){
             false
         );
     }
-}, 999, 2);
+}

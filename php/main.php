@@ -2,7 +2,8 @@
 namespace SIM\COMMENTS;
 use SIM;
 
-add_action( 'comment_post', function( $commentID, $approved, $commentdata ){
+add_action( 'comment_post', __NAMESPACE__.'\commentPost', 10, 3);
+function commentPost( $commentID, $approved, $commentdata ){
     $commentdata['commentID']   = $commentID;
 
     if($approved){
@@ -38,7 +39,7 @@ add_action( 'comment_post', function( $commentID, $approved, $commentdata ){
     $message                = $email->message;
     wp_mail( $to, $subject, $message);
     
-}, 10, 3);
+}
 
 /**
  * Filter whether comments are open on post save
@@ -48,11 +49,12 @@ add_action( 'comment_post', function( $commentID, $approved, $commentdata ){
  * @param string $post_type    Post type. Default is `post`.
  * @param string $comment_type Type of comment. Default is `comment`.
  */
-add_filter( 'get_default_comment_status', function ( $status, $post_type) {
+add_filter( 'get_default_comment_status', __NAMESPACE__.'\defaultStatus', 1, 2 );
+function defaultStatus( $status, $post_type) {
     $allowedPostTypes     = SIM\getModuleOption(MODULE_SLUG, 'posttypes');
     if ( in_array($post_type, $allowedPostTypes)) {
         return 'open';
     }
  
     return $status;
-}, 1, 2 );
+}
