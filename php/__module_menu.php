@@ -9,13 +9,8 @@ DEFINE(__NAMESPACE__.'\MODULE_PATH', plugin_dir_path(__DIR__));
 //module slug is the same as grandparent folder name
 DEFINE(__NAMESPACE__.'\MODULE_SLUG', strtolower(basename(dirname(__DIR__))));
 
-add_filter('sim_submenu_options', __NAMESPACE__.'\subMenuOptions', 10, 3);
-function subMenuOptions($optionsHtml, $moduleSlug, $settings){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $optionsHtml;
-	}
-
+add_filter('sim_submenu_comments_options', __NAMESPACE__.'\subMenuOptions', 10, 2);
+function subMenuOptions($optionsHtml, $settings){
 	ob_start();
 	
     ?>
@@ -31,16 +26,11 @@ function subMenuOptions($optionsHtml, $moduleSlug, $settings){
 		<?php
 	}
 	
-	return ob_get_clean();
+	return $optionsHtml.ob_get_clean();
 }
 
-add_filter('sim_email_settings', __NAMESPACE__.'\emailSettings', 10, 3);
-function emailSettings($optionsHtml, $moduleSlug, $settings){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $optionsHtml;
-	}
-
+add_filter('sim_email_comments_settings', __NAMESPACE__.'\emailSettings', 10, 2);
+function emailSettings($html, $settings){
 	ob_start();
 	
     ?>
@@ -66,5 +56,5 @@ function emailSettings($optionsHtml, $moduleSlug, $settings){
 	$email->printPlaceholders();
 	$email->printInputs($settings);
 
-	return ob_get_clean();
+	return $html.ob_get_clean();
 }
