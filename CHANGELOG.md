@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- class name
 
 ### Fixed
 
