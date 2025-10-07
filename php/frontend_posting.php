@@ -19,7 +19,7 @@ function afterPostContent($frontendcontend){
     }
 
     ?>
-    <div id="comments" class="property frontendform <?php echo $hidden; echo implode(' ', $allowedPostTypes);?>">
+    <div id="comments" class="property frontend-form <?php echo $hidden; echo implode(' ', $allowedPostTypes);?>">
         <h4>Comments</h4>
         <label>
             <input type='checkbox' name='comments' value='allow' <?php echo $checked; ?>>
