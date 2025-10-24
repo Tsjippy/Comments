@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- only run when needed
 
 ### Updated
 
