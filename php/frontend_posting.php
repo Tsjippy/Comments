@@ -32,16 +32,22 @@ function afterPostContent($frontendcontend){
 // Allow comments
 add_action('sim_after_post_save', __NAMESPACE__.'\afterPostSave', 999, 2);
 function afterPostSave($post, $frontEndPost){
-    if(isset($_POST['comments']) && $_POST['comments'] == 'allow'){
-        wp_update_post(
-            array(
-                'ID'                => $post->ID,
-                'comment_status'    => 'open',
-            ),
-            false,
-            false
-        );
-    }elseif($frontEndPost->update){
+    if(
+        isset($_POST['comments']) &&        // There is a comment setting
+        $_POST['comments'] == 'allow'      // and the value is allow
+    ){
+        // Only update if the current post is closed for comments
+        if($post->comment_status != "open"){     
+            wp_update_post(
+                array(
+                    'ID'                => $post->ID,
+                    'comment_status'    => 'open',
+                ),
+                false,
+                false
+            );
+        }
+    }elseif($frontEndPost->update && $post->comment_status == "open"){
         wp_update_post(
             array(
                 'ID'                => $post->ID,
