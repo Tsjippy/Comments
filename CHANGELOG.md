@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- only run when needed
 
 ### Updated
+
+## [8.0.7] - 2025-10-25
+
+
+### Fixed
+- only run when needed
 
 ## [8.0.6] - 2025-10-13
 
