@@ -2,27 +2,19 @@
 namespace SIM\COMMENTS;
 use SIM;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 add_action('sim_frontend_post_after_content', __NAMESPACE__.'\afterPostContent');
 function afterPostContent($frontendcontend){
-    $allowedPostTypes     = SIM\getModuleOption(MODULE_SLUG, 'posttypes');
-
-    if(in_array($frontendcontend->postType, $allowedPostTypes)){
-        $hidden = '';
-    }else{
-        $hidden = 'hidden';
-    }
-
-    if(comments_open($frontendcontend->postId)){
-        $checked    = 'checked';
-    }else{
-        $checked    = '';
-    }
+    $allowedPostTypes     = SETTINGS['posttypes'] ?? [];
 
     ?>
-    <div id="comments" class="property frontend-form <?php echo $hidden; echo implode(' ', $allowedPostTypes);?>">
+    <div id="comments" class="property frontend-form <?php echo in_array($frontendcontend->postType, $allowedPostTypes) ? 'hidden' : ''; echo implode(' ', $allowedPostTypes);?>">
         <h4>Comments</h4>
         <label>
-            <input type='checkbox' name='comments' value='allow' <?php echo $checked; ?>>
+            <input type='checkbox' name='comments' value='allow' <?php echo comments_open($frontendcontend->postId) ? 'checked' : ''; ?>>
             Allow comments
         </label>
     </div>

@@ -3,26 +3,17 @@ namespace SIM\COMMENTS;
 use SIM;
 use SIM\ADMIN;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class CommentReplyEmail extends ADMIN\MailSetting{
 
     public $commentData;
 
-    public function __construct($commentData) {
+    public function __construct($commentData) {        
         // call parent constructor
-		parent::__construct('replied_comment', MODULE_SLUG);
-
-        $postId                 = $commentData['comment_post_ID'];
-        $postTitle              = get_the_title($postId);
-        $parentComment          = get_comment($commentData['comment_parent']);
-        $parentAuthor           = get_userdata($parentComment->user_id);
-        $replyLink              = get_permalink( $postId ).'#'.$commentData['commentID'];
-
-        $this->addUser($parentAuthor);
-
-        $this->replaceArray['%comment_author%']     = $commentData['comment_author'];
-        $this->replaceArray['%comment_content%']    = $commentData['comment_content'];
-        $this->replaceArray['%post_title%']         = $postTitle;
-        $this->replaceArray['%reply_link%']         = $replyLink;
+		parent::__construct('replied_comment', 'comments');
 
         $this->defaultSubject   = "%comment_author% just replied to your comment at %post_title%";
 
@@ -31,5 +22,35 @@ class CommentReplyEmail extends ADMIN\MailSetting{
 		$this->defaultMessage 	.= 'This is what the comment sais:<br>';
         $this->defaultMessage 	.= '%comment_content%<br><br>';
         $this->defaultMessage 	.= "You can reply to this comment using <a href='%reply_link%'>this link</a> if you want.";
+        
+        if(empty($commentData)){
+            return;
+        }
+
+        $postId                 = !empty($commentData['comment_post_ID']) ? $commentData['comment_post_ID'] : null;
+        $postTitle              = get_the_title($postId);
+
+        if(!empty($commentData['comment_parent'])){
+            $parentComment          = get_comment($commentData['comment_parent']);
+            $parentAuthor           = get_userdata($parentComment->user_id);
+
+            $this->addUser($parentAuthor);
+        }
+
+        if(!empty($commentData['commentID'])){
+            $replyLink              = get_permalink( $postId ).'#'.$commentData['commentID'];
+
+            $this->replaceArray['%reply_link%']         = $replyLink;
+        }
+
+        if(!empty($commentData['comment_author'])){
+            $this->replaceArray['%comment_author%']     = $commentData['comment_author'];
+        }
+        
+        if(!empty($commentData['comment_content'])){
+            $this->replaceArray['%comment_content%']    = $commentData['comment_content'];
+        }
+
+        $this->replaceArray['%post_title%']         = $postTitle;
     }
 }

@@ -2,6 +2,10 @@
 namespace SIM\COMMENTS;
 use SIM;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 add_action( 'comment_post', __NAMESPACE__.'\commentPost', 10, 3);
 function commentPost( $commentID, $approved, $commentdata ){
     $commentdata['commentID']   = $commentID;
@@ -46,13 +50,12 @@ function commentPost( $commentID, $approved, $commentdata ){
  *
  * @param string $status       Default status for the given post type,
  *                             either 'open' or 'closed'.
- * @param string $post_type    Post type. Default is `post`.
- * @param string $comment_type Type of comment. Default is `comment`.
+ * @param string $postType    Post type. Default is `post`.
  */
 add_filter( 'get_default_comment_status', __NAMESPACE__.'\defaultStatus', 1, 2 );
-function defaultStatus( $status, $post_type) {
-    $allowedPostTypes     = SIM\getModuleOption(MODULE_SLUG, 'posttypes');
-    if ( in_array($post_type, $allowedPostTypes)) {
+function defaultStatus( $status, $postType) {
+    $allowedPostTypes     = SETTINGS['posttypes'] ?? ['post'];
+    if ( in_array($postType, $allowedPostTypes)) {
         return 'open';
     }
  
