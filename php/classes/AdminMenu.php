@@ -3,8 +3,6 @@ namespace SIM\COMMENTS;
 use SIM;
 use SIM\ADMIN;
 
-use function SIM\ADMIN\addElement;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -16,9 +14,9 @@ class AdminMenu extends ADMIN\SubAdminMenu{
     }
 
     public function settings($parent){
-        addElement('label', $parent, [], "Which post types should have comments allowed by default?");
+        SIM\addElement('label', $parent, [], "Which post types should have comments allowed by default?");
 
-        addElement('br', $parent);
+        SIM\addElement('br', $parent);
 
         foreach(get_post_types() as $type){
             $attributes = [
@@ -35,13 +33,13 @@ class AdminMenu extends ADMIN\SubAdminMenu{
                 $attributes['checked'] = 'checked';
             }
 
-            $label  = addElement('label', $parent, [], $type);
-            addElement('input', $label, $attributes, '', 'afterBegin');
+            $label  = SIM\addElement('label', $parent, [], $type);
+            SIM\addElement('input', $label, $attributes, '', 'afterBegin');
 
-            addElement('br', $parent);
+            SIM\addElement('br', $parent);
         }
 
-        addElement('br', $parent);
+        SIM\addElement('br', $parent);
         
         return true;
     }
@@ -95,7 +93,7 @@ class AdminMenu extends ADMIN\SubAdminMenu{
         </div>
 
         <?php
-        SIM\ADMIN\addRawHtml(ob_get_clean(), $parent, 'beforeEnd');
+        SIM\addRawHtml(ob_get_clean(), $parent, 'beforeEnd');
 
         return true;
     }
