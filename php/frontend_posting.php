@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_action('sim_frontend_post_after_content', __NAMESPACE__.'\afterPostContent');
+add_action('tsjippy_frontend_post_after_content', __NAMESPACE__.'\afterPostContent');
 function afterPostContent($frontendcontend){
     $allowedPostTypes     = SETTINGS['posttypes'] ?? [];
 
@@ -22,7 +22,7 @@ function afterPostContent($frontendcontend){
 }
 
 // Allow comments
-add_action('sim_after_post_save', __NAMESPACE__.'\afterPostSave', 999, 2);
+add_action('tsjippy_after_post_save', __NAMESPACE__.'\afterPostSave', 999, 2);
 function afterPostSave($post, $frontEndPost){
     if(
         isset($_POST['comments']) &&        // There is a comment setting

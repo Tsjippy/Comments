@@ -3,7 +3,7 @@ namespace SIM\COMMENTS;
 
 /**
  * Plugin Name:  		Tsjippy Comments
- * Description:  		This module allows you to define the e-mails sent when someone adds a comment to the website.<br>You can also define on which post types comments are allowed<br>You can turn on or off comments also on a per page level.
+ * Description:  		This plugin allows you to define the e-mails sent when someone adds a comment to the website.<br>You can also define on which post types comments are allowed<br>You can turn on or off comments also on a per page level.
  * Version:      		1.0.0
  * Author:       		Ewald Harmsen
  * AuthorURI:			harmseninnigeria.nl
@@ -28,4 +28,4 @@ $pluginData = get_plugin_data(__FILE__, false, false);
 define(__NAMESPACE__ .'\PLUGIN', plugin_basename(__FILE__));
 define(__NAMESPACE__ .'\PLUGINPATH', __DIR__.'/');
 define(__NAMESPACE__ .'\PLUGINVERSION', $pluginData['Version']);
-define(__NAMESPACE__ .'\SETTINGS', get_option('sim_comments_settings', []));
+define(__NAMESPACE__ .'\SETTINGS', get_option('tsjippy_comments_settings', []));
