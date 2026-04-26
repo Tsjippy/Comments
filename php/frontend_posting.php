@@ -1,6 +1,6 @@
 <?php
-namespace SIM\COMMENTS;
-use SIM;
+namespace TSJIPPY\COMMENTS;
+use TSJIPPY;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

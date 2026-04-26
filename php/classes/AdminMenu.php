@@ -1,7 +1,7 @@
 <?php
-namespace SIM\COMMENTS;
-use SIM;
-use SIM\ADMIN;
+namespace TSJIPPY\COMMENTS;
+use TSJIPPY;
+use TSJIPPY\ADMIN;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,9 +14,9 @@ class AdminMenu extends ADMIN\SubAdminMenu{
     }
 
     public function settings($parent){
-        SIM\addElement('label', $parent, [], "Which post types should have comments allowed by default?");
+        TSJIPPY\addElement('label', $parent, [], "Which post types should have comments allowed by default?");
 
-        SIM\addElement('br', $parent);
+        TSJIPPY\addElement('br', $parent);
 
         foreach(get_post_types() as $type){
             $attributes = [
@@ -33,13 +33,13 @@ class AdminMenu extends ADMIN\SubAdminMenu{
                 $attributes['checked'] = 'checked';
             }
 
-            $label  = SIM\addElement('label', $parent, [], $type);
-            SIM\addElement('input', $label, $attributes, '', 'afterBegin');
+            $label  = TSJIPPY\addElement('label', $parent, [], $type);
+            TSJIPPY\addElement('input', $label, $attributes, '', 'afterBegin');
 
-            SIM\addElement('br', $parent);
+            TSJIPPY\addElement('br', $parent);
         }
 
-        SIM\addElement('br', $parent);
+        TSJIPPY\addElement('br', $parent);
         
         return true;
     }
@@ -93,7 +93,7 @@ class AdminMenu extends ADMIN\SubAdminMenu{
         </div>
 
         <?php
-        SIM\addRawHtml(ob_get_clean(), $parent, 'beforeEnd');
+        TSJIPPY\addRawHtml(ob_get_clean(), $parent, 'beforeEnd');
 
         return true;
     }
