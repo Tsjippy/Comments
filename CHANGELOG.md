@@ -8,6 +8,7 @@
 - module menu to class
 - sim prefix to tsjippy prefix
 - base namespace to TSJIPPY
+- PLUGINCONSTANT value
 
 ### Fixed
 - pluginpath constant
